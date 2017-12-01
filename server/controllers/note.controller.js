@@ -47,3 +47,26 @@ export function deleteNote(req, res) {
       res.status(200).end();
     });
 }
+
+
+//W sumie dziala choc znow sie zastanawiam czy nie da sie jakos inaczej, bo teraz funckja
+//ma dwie odpowiedzialnosci (update notki w bazie, update notki w kolumnie poprzez populate()),
+//moze daloby sie jakos rozbic??
+export function updateNote(req, res) {
+  Note.findOneAndUpdate({id: req.params.noteId}, {$set: {task: req.body.task}}, {new: true}, function(err, newNote) {
+    if (err) {
+          res.status(500).send(err);
+    }
+    res.send(newNote);
+  });
+  Lane.findOne({id: req.params.laneId})
+    .populate('notes')
+    .exec((err, lane) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      lane.save();
+    }).then(() => {
+      res.status(200).end();
+    })
+}

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Note from '../models/note';
 const Schema = mongoose.Schema;
 
 const laneSchema = new Schema({
@@ -13,7 +14,14 @@ laneSchema.pre('find', function (next) {
 });
 
 laneSchema.pre('remove', function (next) {
-  console.log("dupa");
+  this.notes.forEach((noteId) => {
+  	Note.findById(noteId, function(err, note) {
+  		if (err) {
+  			next(err);
+  		}
+  		note.remove();
+  	});
+  })
   next();
 });
 
