@@ -12,4 +12,9 @@ laneSchema.pre('find', function (next) {
   next();
 });
 
+laneSchema.pre('remove', function (next) {
+  console.log("dupa");
+  next();
+});
+
 export default mongoose.model('Lane', laneSchema);

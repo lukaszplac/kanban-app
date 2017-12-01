@@ -14,15 +14,10 @@ export function addLane(req, res) {
 
   newLane.notes = [];
   newLane.id = uuid();
-  console.log(newLane.name);
-  console.log(newLane.id);
-  console.log(newLane.notes);
   newLane.save((err, saved) => {
-  	console.log(err);
     if (err) {
       res.status(500).send(err);
     }
-    console.log('pupa');
     res.json({ lane: saved });
   });
 };
