@@ -23,7 +23,7 @@ class Kanban extends React.Component {
 //Kanban.need = [() => { return fetchLanes(); }];
 
 const mapStateToProps = state => ({
-  lanes: Object.values(state.lanes)
+lanes: Array.isArray(state.lanes) ? Object.values(state.lanes) : []
 });
 
 const mapDispatchToProps = {
