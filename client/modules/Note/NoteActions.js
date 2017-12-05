@@ -1,39 +1,45 @@
-import uuid from 'uuid/v4';
-// Export Constants
+import callApi from '../../util/apiCaller';
+
 export const CREATE_NOTE = 'CREATE_NOTE';
+export const CREATE_NOTES = 'CREATE_NOTES';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
-export const CREATE_NOTES = 'CREATE_NOTES';
 
-// Export Actions
-export function createNote(note) {
-  return {
-    type: CREATE_NOTE,
-    note: {
-      id: uuid.v4(),
-      ...note
-    }
+export function createNote(note, laneId) {
+ return {
+   type: CREATE_NOTE,
+   laneId,
+   note,
+ };
+}
+
+export function createNoteRequest(note, laneId) {
+  return (dispatch) => {
+    return callApi('notes', 'post', { note, laneId }).then(noteResp => {
+      dispatch(createNote(noteResp, laneId));
+    });
   };
-};
+}
 
-export function createNotes(notes) {
+
+export function createNotes(notesData) {
   return {
     type: CREATE_NOTES,
-    notes
+    notes: notesData,
   };
-};
+}
 
-
-export function updateNote(updatedNote) {
+export function updateNote(note) {
   return {
     type: UPDATE_NOTE,
-    ...updatedNote
+    note,
   };
-};
+}
 
-export function deleteNote(id) {
+export function deleteNote(noteId, laneId) {
   return {
     type: DELETE_NOTE,
-    id
+    noteId,
+    laneId,
   };
-};
+}

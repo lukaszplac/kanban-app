@@ -1,9 +1,9 @@
-import { normalize, schema } from 'normalizr';
+import { schema } from 'normalizr';
 
 const note = new schema.Entity('notes');
 
 const lane = new schema.Entity('lanes', {
-  notes: [note]
+  notes: [note],
 });
 
-export const _lanes = [lane];
+export const lanes = [lane];

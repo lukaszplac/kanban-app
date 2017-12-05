@@ -1,41 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import styles from './Edit.css';
+import styles from './Edit.css'
 
-class Edit extends Component {
-
-  render() {
-    const {editing, ...props} = this.props;
-
-    return (
-      <div {...props}>
-        {editing ? this.renderEdit() : this.renderValue()}
-      </div>
-    );
-  }
-
-  renderEdit = () => {
-    return <input type="text"
-            autoFocus={true}
-            defaultValue={this.props.value}
-            onBlur={this.finishEdit}
-            onKeyPress={this.checkEnter} />;
-  };
-
-  renderValue = () => {
-    const { value, onDelete, onValueClick } = this.props;
-
-    return (
-      <div onClick={onValueClick}>
-        <span className={styles.value}>{value}</span>
-        {onDelete ? this.renderDelete() : null }
-      </div>
-    );
-  };
-
-  renderDelete = () => {
-    return <button className={styles.delete} onClick={this.props.onDelete}>×</button>;
-  };
-
+export default class Edit extends Component {
+  
   checkEnter = (e) => {
     if(e.key === 'Enter') {
       this.finishEdit(e);
@@ -45,17 +12,50 @@ class Edit extends Component {
   finishEdit = (e) => {
     const value = e.target.value;
 
-    if(this.props.onEdit) {
-      this.props.onEdit(value.trim());
+    if(this.props.onUpdate) {
+      this.props.onUpdate(value.trim());
     }
   };
+
+  renderDelete = () => {
+    return <button className={styles.delete} onClick={this.props.onDelete}>×</button>;
+  };
+
+  renderValue = () => {
+    const { value, onDelete, onValueClick } = this.props;
+    return (
+      <div>
+        <span className={styles.value} onClick={onValueClick}>{value}</span>
+        {onDelete ? this.renderDelete() : null }
+      </div>
+    );
+  };
+
+  renderEdit = () => {
+    return (
+      <input
+        type="text"
+        autoFocus
+        defaultValue={this.props.value}
+        onBlur={this.finishEdit}
+        onKeyPress={this.checkEnter}
+      />
+    );
+  };
+
+  render() {
+    return (
+      <div>
+        {this.props.editing ? this.renderEdit() : this.renderValue()}
+      </div>
+    );
+  }
 }
 
 Edit.propTypes = {
   value: PropTypes.string,
-  onEdit: PropTypes.func,
+  onUpdate: PropTypes.func,
   onValueClick: PropTypes.func,
-  editing: PropTypes.bool
+  onDelete: PropTypes.func,
+  editing: PropTypes.bool,
 };
-
-export default Edit;

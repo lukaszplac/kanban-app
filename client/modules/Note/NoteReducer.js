@@ -1,19 +1,22 @@
-// Import Actions
-import {CREATE_NOTE, CREATE_NOTES, UPDATE_NOTE, DELETE_NOTE } from './NoteActions';
+import { CREATE_NOTE, UPDATE_NOTE, DELETE_NOTE, CREATE_NOTES, EDIT_NOTE } from './NoteActions';
 
-// Initial State
+import omit from 'lodash/omit';
+
 const initialState = {};
 
 export default function notes(state = initialState, action) {
   switch (action.type) {
     case CREATE_NOTE:
+    case UPDATE_NOTE:
       return { ...state, [action.note.id]: action.note };
+    case EDIT_NOTE: {
+      const note = { ...state[action.id], editing: true };
+      return { ...state, [action.id]: note };
+    }
+    case DELETE_NOTE:
+      return omit(state, action.noteId);
     case CREATE_NOTES:
       return { ...action.notes };
-    case UPDATE_NOTE:
-      return { ...state, [action.updatedNote.id]: action.updatedNote };
-    case DELETE_NOTE:
-      return _.omit(state, action.id);
     default:
       return state;
   }
