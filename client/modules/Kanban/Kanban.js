@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Lanes from '../Lane/Lanes';
 import styles from '../Lane/Lane.css';
-import { createLane } from '../Lane/LaneActions';
+import { createLane, fetchLanes } from '../Lane/LaneActions';
 
 class Kanban extends React.Component {
   render() {
@@ -12,18 +12,19 @@ class Kanban extends React.Component {
       <div>
         <button className="add-lane"
   				onClick={() => createLane({
-    			name: 'New lane'
-  				})}
-  		</button>
+    			name: 'New lane'})}>
+  		  </button>
         <Lanes lanes={lanes} />
       </div>
     );
   }
 }
 
+//Kanban.need = [() => { return fetchLanes(); }];
+
 const mapStateToProps = state => ({
-lanes: state.lanes
-})
+  lanes: Object.values(state.lanes)
+});
 
 const mapDispatchToProps = {
   createLane
