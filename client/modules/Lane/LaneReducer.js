@@ -11,8 +11,8 @@ export default function lanes(state = initialState, action) {
    case UPDATE_LANE:
      return { ...state, [action.lane.id]: action.lane };
    case EDIT_LANE: {
-     const lane = { ...state[action.id], editing: true };
-     return { ...state, [action.id]: lane };
+     const lane = { ...state[action.lane], editing: true };
+     return { ...state, [action.lane]: lane };
    }
    case CREATE_LANES:
      return { ...action.lanes };
@@ -23,7 +23,10 @@ export default function lanes(state = initialState, action) {
      return { ...state, [action.laneId]: newLane };
    }
    case CREATE_NOTE: {
+    console.log(state);
+    console.log(action);
      const newLane = { ...state[action.laneId] };
+     console.log(newLane);
      newLane.notes = newLane.notes.concat(action.note.id);
 
      return { ...state, [action.laneId]: newLane };

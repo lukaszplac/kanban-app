@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Lanes from '../Lane/Lanes';
-import styles from '../Lane/Lane.css';
+import styles from './Kanban.css';
 import { createLaneRequest, fetchLanes } from '../Lane/LaneActions';
 
 class Kanban extends React.Component {
@@ -16,7 +16,7 @@ class Kanban extends React.Component {
 
   render() {
   return(
-    <div>
+    <div className={styles.container}>
       <button
         className={styles.AddLane}
         onClick={() => this.props.createLane({

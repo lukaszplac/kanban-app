@@ -8,14 +8,15 @@
   width: 100%;
   max-width: 980px;
   margin: auto;
-  padding: 64px 16px;
+  padding: 28px 16px;
   overflow: auto;
 }
 
 .site-title {
   font-weight: 300;
-  font-size: 42px;
-  float: left;
+  font-size: 36px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .site-title a {

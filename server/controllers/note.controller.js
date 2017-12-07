@@ -7,20 +7,25 @@ export function getSomething(req, res) {
 };
 
 export function addNote(req, res) {
-  if (!req.body.note.task) {
-    res.status(403).end();
+  const { note, laneId } = req.body;
+
+  if (!note || !note.task || !laneId) {
+    res.status(400).end();
   }
 
-  const newNote = new Note(req.body.note);
+  const newNote = new Note({
+    task: note.task,
+  });
+
   newNote.id = uuid();
   newNote.save((err, saved) => {
     if (err) {
       res.status(500).send(err);
     }
-    Lane.findOne({id: req.body.laneId})
+    Lane.findOne({ id: laneId })
       .then(lane => {
         lane.notes.push(saved);
-        return lane.save()
+        return lane.save();
       })
       .then(() => {
         res.json(saved);
@@ -34,10 +39,11 @@ export function addNote(req, res) {
 //ktora trzeba wyrzucic, ale nie mozna po prostu jakos tego zrobic poprzez odwolanie
 //sie do referencji _id ktora tkwi w tablicy notatek
 export function deleteNote(req, res) {
+  console.log(req.params.laneId);
   Lane.findOne({id: req.params.laneId})
     .populate('notes')
     .exec((err,lane) => {
-      if (err) {
+      if (err){
         res.status(500).send(err);
       }
       lane.notes = lane.notes.filter(note => note.id != req.params.noteId);

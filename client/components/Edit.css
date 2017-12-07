@@ -1,7 +1,7 @@
 .value {
-
+	color: black;
 }
 
-.delete {
-	
+.value:hover {
+	cursor: pointer;
 }

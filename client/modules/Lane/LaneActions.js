@@ -5,6 +5,7 @@ import {createNotes} from '../Note/NoteActions'
 
 export const CREATE_LANE = 'CREATE_LANE';
 export const UPDATE_LANE = 'UPDATE_LANE';
+export const EDIT_LANE = 'EDIT_LANE';
 export const DELETE_LANE = 'DELETE_LANE';
 export const CREATE_LANES = 'CREATE_LANES';
 
@@ -40,10 +41,35 @@ export function updateLane(lane) {
   };
 }
 
+export function editLane(lane) {
+  return {
+    type: EDIT_LANE,
+    lane,
+  };
+}
+
+export function updateLaneRequest(lane) {
+  return (dispatch) => {
+    var path = 'lanes/'+lane.id+'/new';
+    return callApi(path, 'put', {"name": lane.name}).then(() => {
+      dispatch(updateLane(lane));
+    });
+  };
+}
+
 export function deleteLane(laneId) {
   return {
     type: DELETE_LANE,
     laneId
+  };
+}
+
+export function deleteLaneRequest(laneId) {
+  return (dispatch) => {
+    var path = 'lanes/'+laneId;
+    return callApi(path, 'delete').then(() => {
+      dispatch(deleteLane(laneId));
+    });
   };
 }
 

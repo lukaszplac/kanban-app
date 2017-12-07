@@ -1,3 +1,17 @@
-.Note {
-	
+.note {
+	list-style-type: none;
+	border: 1px solid blue;
+	padding: 5px;
+	margin: 3px;
+	border-radius: 3px;	
 }
+
+.note .valueContainer {
+	text-align: left;
+	width: 50%;
+	margin: 0 auto;
+	padding: 3px 3px;
+	border: none;
+	border-radius: 3px;
+}
+

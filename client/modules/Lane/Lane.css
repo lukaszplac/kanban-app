@@ -1,20 +1,38 @@
-/* Lane styles */
-.AddLane {
-
+.lane {
+	border: 1px solid lightblue;
+	border-radius: 5px;
+	height: auto;
+	width: 80%;
+	padding: 5px;
+	margin: 5px auto;
 }
 
-.LaneHeader {
-
+.laneHeader {
+	padding: 5px;
 }
 
-.LaneAddNote {
-
+.laneAddNote, .laneDelete {
+	display: inline;
 }
 
-.LaneDelete {
-
+.laneDelete {
+	float: right;
 }
 
-.LaneName {
-	
+.laneAddNote>button, .laneDelete>button {
+	padding: 4px;
+}
+
+.valueContainer {
+	text-align: center;
+	width: 50%;
+	margin: 0 auto;
+	padding: 3px 3px;
+	border: 1px solid lightgreen;
+	border-radius: 3px;
+}
+
+.valueContainer:hover {
+	background-color: lightgreen;
+	color: black;
 }
