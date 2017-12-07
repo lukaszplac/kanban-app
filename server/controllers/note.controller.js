@@ -7,18 +7,17 @@ export function getSomething(req, res) {
 };
 
 export function addNote(req, res) {
-  if (!req.body.task) {
+  if (!req.body.note.task) {
     res.status(403).end();
   }
 
-  const newNote = new Note(req.body);
-
+  const newNote = new Note(req.body.note);
   newNote.id = uuid();
   newNote.save((err, saved) => {
     if (err) {
       res.status(500).send(err);
     }
-    Lane.findOne({id: req.params.laneId})
+    Lane.findOne({id: req.body.laneId})
       .then(lane => {
         lane.notes.push(saved);
         return lane.save()
