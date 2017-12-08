@@ -2,12 +2,14 @@ import React, { PropTypes } from 'react';
 import Note from './Note';
 import Edit from '../../components/Edit'
 
-const Notes = ({ notes, laneId, editNote, updateNoteRequest, deleteNoteRequest}) => {
+const Notes = ({ notes, laneId, editNote, updateNoteRequest, deleteNoteRequest, moveWithinLane}) => {
   return (<ul className="notes">{notes.map((note) =>
     <Note
 	  id={note.id}
 	  key={note.id}
-	  //editing={note.editing}
+	  editing={note.editing}
+	  moveWithinLane={moveWithinLane}
+  	  laneId={laneId}
 		>
 	  <Edit
 	    editing={note.editing}

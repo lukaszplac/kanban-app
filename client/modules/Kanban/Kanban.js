@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import Lanes from '../Lane/Lanes';
 import styles from './Kanban.css';
 import { createLaneRequest, fetchLanes } from '../Lane/LaneActions';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 class Kanban extends React.Component {
   constructor(props) {
@@ -43,4 +46,7 @@ const mapDispatchToProps = {
  fetch: fetchLanes
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Kanban);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  DragDropContext(HTML5Backend)
+  )(Kanban);
