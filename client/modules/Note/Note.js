@@ -19,9 +19,8 @@ const noteSource = {
 const noteTarget = {
   hover(targetProps, monitor) {
     const sourceProps = monitor.getItem();
-
-    if(targetProps.id !== sourceProps.id) {
-      targetProps.moveWithinLane(targetProps.laneId, targetProps.id, sourceProps.Id);
+    if(targetProps.id !== sourceProps.id && targetProps.laneId === sourceProps.laneId) {
+      targetProps.moveWithinLane(targetProps.laneId, targetProps.id, sourceProps.id);
     }
   }
 };
