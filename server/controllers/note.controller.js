@@ -6,6 +6,28 @@ export function getSomething(req, res) {
   return res.status(200).end();
 };
 
+
+export function moveNote(req, res) {
+
+  const movedNote = req.body.deleted;
+  const {targetLaneId} = req.body;
+
+  if (!movedNote || !movedNote.task || !targetLaneId) {
+    res.status(400).end();
+  }
+  Lane.findOne({id: targetLaneId})
+    .populate('notes')
+    .exec((err, lane) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      lane.notes.push(movedNote);
+      return lane.save();
+    }).then(() => {
+      res.status(200).end();
+    })
+}
+
 export function addNote(req, res) {
   const { note, laneId } = req.body;
 
@@ -33,13 +55,7 @@ export function addNote(req, res) {
   });
 }
 
-
-//Niby zrobilem ponizszy endpoint ale sie zastanawiam czy nie da sie jakos prosciej
-//bo teraz po prostu tworze tak jakby na nowo 'lane' poprzez wyfiltrowanie notatki
-//ktora trzeba wyrzucic, ale nie mozna po prostu jakos tego zrobic poprzez odwolanie
-//sie do referencji _id ktora tkwi w tablicy notatek
 export function deleteNote(req, res) {
-  console.log(req.params.laneId);
   Lane.findOne({id: req.params.laneId})
     .populate('notes')
     .exec((err,lane) => {
@@ -49,14 +65,12 @@ export function deleteNote(req, res) {
       lane.notes = lane.notes.filter(note => note.id != req.params.noteId);
       lane.save();
     }).then(() => {
-      res.status(200).end();
+      Note.findOne({id: req.params.noteId}).then((note) => {
+          res.status(200).json(note);
+      });
     });
 }
 
-
-//W sumie dziala choc znow sie zastanawiam czy nie da sie jakos inaczej, bo teraz funckja
-//ma dwie odpowiedzialnosci (update notki w bazie, update notki w kolumnie poprzez populate()),
-//moze daloby sie jakos rozbic??
 export function updateNote(req, res) {
   Note.findOneAndUpdate({id: req.params.noteId}, {$set: {task: req.body.task}}, {new: true}, function(err, newNote) {
     if (err) {

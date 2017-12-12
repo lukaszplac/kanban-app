@@ -19,6 +19,17 @@ export function moveBetweenLanes(targetLaneId, sourceNoteId, sourceLaneId) {
   };
 }
 
+export function moveBetweenLanesRequest(targetLaneId, sourceNoteId, sourceLaneId) {
+  return (dispatch) => { 
+    var path = 'lanes/'+sourceLaneId+'/notes/'+sourceNoteId;
+    return callApi(path, 'delete').then((deleted) => {
+        return callApi('lanes/'+targetLaneId+'/move', 'post', { deleted, targetLaneId }).then((res) => {
+          dispatch(moveBetweenLanes(targetLaneId, sourceNoteId, sourceLaneId));
+      })
+    });
+  };
+};
+
 export function createLane(lane) {
   return {
     type: CREATE_LANE,
