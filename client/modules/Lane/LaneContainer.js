@@ -4,7 +4,7 @@ import { deleteLaneRequest, updateLaneRequest, editLane, moveBetweenLanesRequest
 import { createNoteRequest } from '../Note/NoteActions';
 import { compose } from 'redux';
 import { DropTarget } from 'react-dnd';
-import ItemTypes from '../Kanban/itemTypes';
+import ItemTypes from '../Kanban/ItemTypes';
 
 const noteTarget = {
  drop(targetProps, monitor) {
@@ -28,9 +28,9 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
 		deleteLane: deleteLaneRequest, 
-		updateLane: updateLaneRequest, 
+		updateLane: updateLaneRequest,
 		addNote: createNoteRequest,
 		moveNoteTo: moveBetweenLanesRequest,
 		editLane
@@ -42,4 +42,3 @@ export default compose(
     connectDropTarget: dragConnect.dropTarget()
   }))
 )(Lane);
-

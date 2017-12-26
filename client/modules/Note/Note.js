@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import styles from './Note.css';
 import {DragSource, DropTarget} from 'react-dnd';
 import { compose } from 'redux';
-import ItemTypes from '../Kanban/itemTypes';
+import ItemTypes from '../Kanban/ItemTypes';
 
 const noteSource = {
   beginDrag(props) {
@@ -27,13 +27,13 @@ const noteTarget = {
 
 class Note extends React.Component {
   render() {
-    const {connectDragSource, 
+    const {connectDragSource,
     	   connectDropTarget,
     	   isDragging,
-           editing, 
+           editing,
            children} = this.props;
 
-    const dragSource = editing ? a => a : connectDragSource; 
+    const dragSource = editing ? a => a : connectDragSource;
 
     return dragSource(connectDropTarget(
       <li className={styles.note}
