@@ -220,7 +220,11 @@
 	});
 
 	// start app
-	app.listen(_config2.default.port, function (error) {
+	// app.listen(serverConfig.port, (error) => {
+	//   if (!error) {
+	//     console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
+	//   }
+	app.listen(process.env.PORT || 8080, function (error) {
 	  if (!error) {
 	    console.log('MERN is running on port: ' + _config2.default.port + '! Build something amazing!'); // eslint-disable-line
 	  }
